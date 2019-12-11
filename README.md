@@ -33,7 +33,10 @@ jenkinsPipelineConfig:
   serviceName: jenkins
 ```
 
-# Using the pipeline project for builds
+# Using another project for buildconfigs
+
+If you want your pipelines/buildconfigs to be located in another namespace, do these steps. This is useful when developers have access only to their projects,
+not the jenkins project.
 
 Create the project and give permissions to jenkins in another namespace:
 
@@ -50,6 +53,9 @@ oc process jenkins-services -n openshift | oc create -f -
 ```
 
 ## Configuring openshift-jenkins-sync plugin
+
+You only need this if you're using a separate namespace. If you're creating
+the pipelines inside the `cicd` project, this isn't needed.
 
 1. Login into Jenkins
 
