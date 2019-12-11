@@ -10,8 +10,8 @@ objects:
     kind: BuildConfig
     metadata:
       labels:
-        app: simple-pipeline
-      name: simple-pipeline
+        app: ${BC_NAME}
+      name: ${BC_NAME}
     spec:
       failedBuildsHistoryLimit: 5
       nodeSelector: {}
@@ -35,6 +35,10 @@ objects:
         type: JenkinsPipeline
       successfulBuildsHistoryLimit: 5
 parameters:
+- name: BC_NAME
+  description: The name of the buildconfig that will be created
+  value: simple-pipeline
+  required: true
 - name: GITURL
   description: The URL of the repository including the simple pipeline
   value: https://github.com/eitchugo/openshift-jenkins-lab.git
