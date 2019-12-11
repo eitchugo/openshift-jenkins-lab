@@ -40,6 +40,7 @@ Create the project and give permissions to jenkins in another namespace:
 ```
 oc new-project pipelines
 oc policy add-role-to-user edit system:serviceaccount:cicd:jenkins
+oc create -f jenkins-sa.yaml
 ```
 
 (Optional) If you didn't disable jenkins auto-provisioning, create jenkins services:
@@ -74,6 +75,7 @@ Create the templates:
 
 ```
 oc create -f pipelines/simple/bc.yaml
+oc create -f pipelines/other-namespace/bc.yaml
 ```
 
 # Creating the buildconfigs
@@ -88,4 +90,19 @@ Simple pipeline with alternate git repository:
 
 ```
 oc process simple-pipeline BC_NAME=simple-pipeline-altgit GITURL=https://example.com/gitlab/openshift-jenkins-lab.git | oc create -f -
+```
+
+Simple pipeline building in another namespace (`pipelines`):
+
+```
+oc process other-namespace-pipeline BUILD_NAMESPACE=pipelines | oc create -f -
+```
+
+# Running builds
+
+You can run directly inside Jenkins or with OpenShift:
+
+```
+oc get bc
+oc start-build <bc-name>
 ```
