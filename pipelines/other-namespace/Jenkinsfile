@@ -1,0 +1,31 @@
+podTemplate(
+  name: "other-namespace",
+  label: "other-namespace",
+  cloud: "openshift",
+  inheritFrom: "maven",
+  namespace: "${BUILD_NAMESPACE}"
+) {
+  node('other-namespace') {
+    stage('Checkout Source') {
+      checkout scm
+    }
+  
+    stage('Begin') {
+      echo "This is just a test."
+      sh "date"
+      echo "Additional Environment Variables from BuildConfig:"
+      echo "  GITURL: ${GITURL}"
+      echo "  GITBRANCH: ${GITBRANCH}"
+    }
+  
+    stage('Waiting') {
+      echo "Waiting 10 seconds."
+      sleep 10
+    }
+  
+    stage('End') {
+      sh "date"
+      echo "The pipeline ended." 
+    }
+  }
+}
